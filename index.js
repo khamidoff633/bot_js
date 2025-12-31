@@ -1,7 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 
-// 🔴 BU YERGA TOKEN QO‘YASAN
-const TOKEN = '7709305890:AAGhqtsOj7hbtDzsxDVv8lTbgJEL9wfIMmg';
+const TOKEN = process.env.TOKEN;
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 
@@ -30,7 +29,10 @@ bot.on('message', (msg) => {
 bot.onText(/\/start/, (msg) => {
   bot.sendMessage(
     msg.chat.id,
-    "👋 FunStat bot ishga tushdi!\n\n/start — statistika"
+    "👋 FunStat bot ishga tushdi!\n\n" +
+    "📌 Bu bot guruhdagi foydalanuvchilarning xabar sonini hisoblaydi.\n" +
+    "📌 /stat — guruh statistikasi\n\n" +
+    "💡 Bu bot @bakhridd1n_dev tomonidan yaratildi."
   );
 });
 
@@ -48,9 +50,9 @@ bot.onText(/\/stat/, (msg) => {
 
   let text = "📊 *Guruh statistikasi*\n\n";
 
-sorted.forEach((u, i) => {
-  text += (i + 1) + ". " + u.name + " — " + u.count + " ta xabar\n";
-});
+  sorted.forEach((u, i) => {
+    text += (i + 1) + ". " + u.name + " — " + u.count + " ta xabar\n";
+  });
 
   bot.sendMessage(chatId, text, { parse_mode: "Markdown" });
 });
